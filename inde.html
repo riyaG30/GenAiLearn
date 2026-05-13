@@ -1,0 +1,2321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GenAI Roadmap — CampusX Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,800;9..144,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f5f1e8;
+    --paper-deep: #ede6d3;
+    --ink: #1a1410;
+    --ink-soft: #4a3f35;
+    --ink-faded: #8a7a68;
+    --accent: #c2410c;       /* burnt orange */
+    --accent-soft: #fed7aa;
+    --accent-deep: #7c2d12;
+    --teal: #0f766e;
+    --teal-soft: #ccfbf1;
+    --olive: #65a30d;
+    --olive-soft: #ecfccb;
+    --plum: #86198f;
+    --plum-soft: #fae8ff;
+    --line: #d4c5a9;
+    --line-soft: #e8dcc4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    background-image:
+      radial-gradient(at 8% 12%, rgba(194, 65, 12, 0.06) 0px, transparent 50%),
+      radial-gradient(at 92% 88%, rgba(15, 118, 110, 0.05) 0px, transparent 50%);
+    min-height: 100vh;
+  }
+
+  .paper-grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap { max-width: 920px; margin: 0 auto; padding: 48px 24px 100px; position: relative; z-index: 1; }
+
+  /* ===== HEADER ===== */
+  .hero {
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 32px;
+    margin-bottom: 36px;
+  }
+
+  .hero-stamp {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  .hero-stamp::before {
+    content: ''; width: 28px; height: 1px; background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(40px, 6.5vw, 64px);
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .hero .subhead {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    line-height: 1.4;
+    margin-top: 14px;
+    max-width: 620px;
+  }
+
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 28px;
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .hero-meta-item {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .hero-meta-item .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+  }
+  .hero-meta-item .val {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ===== ANCHOR CALLOUT ===== */
+  .anchor-box {
+    background: var(--paper-deep);
+    border-left: 3px solid var(--accent);
+    padding: 22px 26px;
+    margin: 28px 0 36px;
+    border-radius: 0 8px 8px 0;
+  }
+  .anchor-box h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .anchor-box p {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+  .anchor-box .free-pill {
+    display: inline-block;
+    background: var(--olive);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-left: 8px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ===== PROGRESS ===== */
+  .progress-strip {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 20px;
+    margin-bottom: 32px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .progress-strip .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--ink-faded);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .progress-bar-outer {
+    flex: 1; height: 8px;
+    background: var(--line-soft);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--teal));
+    width: 0%;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 4px;
+  }
+  .progress-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 600;
+    min-width: 56px;
+    text-align: right;
+  }
+  .reset-link {
+    background: none;
+    border: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--ink-faded);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-transform: uppercase;
+  }
+  .reset-link:hover { color: var(--accent); }
+
+  /* ===== TABS ===== */
+  .tabs {
+    display: flex; flex-wrap: wrap; gap: 4px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+  }
+  .tab {
+    background: none;
+    border: none;
+    padding: 12px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-faded);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 8px;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab .tab-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-faded);
+  }
+  .tab.active .tab-num { color: var(--accent); }
+
+  /* ===== PHASE ===== */
+  .phase { display: none; animation: fadeUp 0.5s ease; }
+  .phase.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .phase-head {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .phase-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .phase-head h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  .phase-head h2 em { color: var(--accent); font-style: italic; font-weight: 400; }
+  .phase-head .lede {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    max-width: 640px;
+  }
+
+  .phase-stats {
+    display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap;
+  }
+  .stat {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .stat .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+  }
+  .stat .stat-val {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* Per-phase progress */
+  .phase-progress {
+    margin-top: 18px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .phase-progress .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--ink-faded);
+    text-transform: uppercase;
+  }
+  .phase-progress .bar {
+    flex: 1; max-width: 200px; height: 4px;
+    background: var(--line-soft);
+    border-radius: 2px; overflow: hidden;
+  }
+  .phase-progress .fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%; transition: width 0.4s;
+  }
+  .phase-progress .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Showcase note */
+  .showcase-note {
+    background: var(--olive-soft);
+    border: 1px solid var(--olive);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .showcase-note .icon { font-size: 18px; flex-shrink: 0; line-height: 1.4; }
+  .showcase-note .text { font-size: 13.5px; color: var(--ink); line-height: 1.55; }
+  .showcase-note .text strong { color: var(--accent-deep); font-weight: 700; }
+
+  /* ===== TOPIC CARDS ===== */
+  .topic {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .topic:hover { border-color: var(--ink-faded); }
+  .topic.completed { background: var(--paper-deep); border-color: var(--line-soft); }
+  .topic.completed .topic-title { text-decoration: line-through; color: var(--ink-faded); }
+
+  .topic-bar {
+    padding: 16px 20px;
+    display: flex; align-items: center; gap: 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .topic-bar:hover { background: rgba(194, 65, 12, 0.02); }
+
+  .check {
+    width: 22px; height: 22px;
+    border: 1.5px solid var(--line);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .check:hover { border-color: var(--accent); }
+  .check.checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .check.checked::after {
+    content: '✓'; color: white; font-size: 13px; font-weight: 700;
+  }
+
+  .topic-emoji { font-size: 18px; flex-shrink: 0; }
+
+  .topic-title {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    flex: 1;
+    line-height: 1.3;
+  }
+
+  .pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .pill-critical { background: #fee2e2; color: #991b1b; }
+  .pill-build { background: var(--accent-soft); color: var(--accent-deep); }
+  .pill-deepen { background: var(--teal-soft); color: var(--teal); }
+  .pill-new { background: var(--plum-soft); color: var(--plum); }
+  .pill-quick { background: #e0f2fe; color: #075985; }
+
+  .caret {
+    color: var(--ink-faded);
+    font-size: 12px;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .topic.open .caret { transform: rotate(180deg); }
+
+  .topic-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .topic.open .topic-body { max-height: 4000px; }
+
+  .topic-inner {
+    padding: 4px 24px 24px 56px;
+    border-top: 1px dashed var(--line-soft);
+    padding-top: 18px;
+  }
+
+  /* Sections within a topic */
+  .sec { margin-bottom: 18px; }
+  .sec:last-child { margin-bottom: 0; }
+  .sec-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    margin-bottom: 8px;
+  }
+  .sec ul { list-style: none; padding: 0; }
+  .sec li {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    padding: 3px 0 3px 18px;
+    position: relative;
+  }
+  .sec li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .sec li strong { color: var(--ink); font-weight: 600; }
+
+  /* Video list - the main mapping */
+  .videos {
+    background: var(--paper-deep);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-top: 14px;
+  }
+  .videos-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .videos-head .pl-name {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .videos-head .pl-source {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    background: white;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    border: 1px solid var(--accent-soft);
+  }
+  .videos-head .pl-free {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: white;
+    background: var(--olive);
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    margin-left: auto;
+    font-weight: 600;
+  }
+
+  .vid-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .vid-list li {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 7px 0;
+    border-bottom: 1px dotted var(--line-soft);
+  }
+  /* Time-stamped resource pill (used in Python ramp-up blocks) */
+  .time-resource {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .time-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: var(--accent);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+  }
+  .time-pill.alt { background: var(--teal); }
+  .time-pill.read { background: var(--olive); }
+  .time-resource a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .time-resource a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .time-resource .note {
+    color: var(--ink-faded);
+    font-size: 11.5px;
+    margin-left: 4px;
+  }
+
+  /* Total time summary box */
+  .time-total {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--accent-deep);
+    text-align: center;
+  }
+  .time-total strong {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .vid-list li:last-child { border-bottom: none; }
+  .vid-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    font-weight: 700;
+    background: white;
+    padding: 2px 7px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    min-width: 38px;
+    text-align: center;
+    border: 1px solid var(--accent-soft);
+  }
+  .vid-link {
+    color: var(--ink);
+    font-size: 13.5px;
+    text-decoration: none;
+    line-height: 1.4;
+    flex: 1;
+    border-bottom: 1px solid transparent;
+    transition: all 0.15s;
+  }
+  .vid-link:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .vid-link::after {
+    content: ' ↗';
+    color: var(--ink-faded);
+    font-size: 11px;
+    opacity: 0.6;
+  }
+  .vid-link:hover::after { opacity: 1; color: var(--accent); }
+
+  /* External / supplement */
+  .supplement {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: white;
+    border-left: 2px solid var(--teal);
+    border-radius: 0 6px 6px 0;
+  }
+  .supplement-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .supplement ul { list-style: none; padding: 0; }
+  .supplement li {
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding: 3px 0;
+    line-height: 1.5;
+  }
+  .supplement a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--ink-faded);
+    transition: all 0.15s;
+  }
+  .supplement a:hover {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+    border-bottom-style: solid;
+  }
+
+  /* Your edge - personal hook from ServiceNow work */
+  .edge {
+    background: var(--accent-soft);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--accent-deep);
+    line-height: 1.55;
+  }
+  .edge strong {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  /* Skip note */
+  .skip {
+    background: transparent;
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-size: 12.5px;
+    color: var(--ink-faded);
+    line-height: 1.55;
+  }
+  .skip strong { color: var(--ink-soft); }
+
+  /* Schedule */
+  .sched {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .sched-row {
+    display: grid;
+    grid-template-columns: 70px 1fr 1.3fr;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .sched-row:last-child { border-bottom: none; }
+  .sched-row.head {
+    background: var(--paper-deep);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--ink-faded);
+    text-transform: uppercase;
+  }
+  .sched-row.head > div { padding: 12px 16px; }
+  .sched-row.phase-divider {
+    grid-column: 1 / -1;
+    background: var(--accent);
+    color: white;
+    padding: 8px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .sched-row.phase-divider > div { padding: 0; }
+
+  .sched-cell { padding: 14px 16px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+  .sched-cell.wk {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+    background: rgba(194, 65, 12, 0.04);
+  }
+  .sched-cell strong { color: var(--ink); font-weight: 600; }
+
+  /* Cost banner */
+  .cost-banner {
+    background: linear-gradient(135deg, var(--olive-soft), var(--teal-soft));
+    border: 1px solid var(--olive);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 24px 0;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .cost-banner .icon { font-size: 22px; line-height: 1.3; }
+  .cost-banner h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .cost-banner p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
+
+  /* Resources */
+  .res-section {
+    margin-top: 28px;
+  }
+  .res-section h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  .res-section h3 em { font-style: italic; color: var(--accent); }
+  .res-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .res-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .res-card .r-name {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .res-card .r-name a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .res-card .r-name a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  .res-card .r-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-top: 6px;
+  }
+  .res-card .r-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  .r-tag-free { background: var(--olive); color: white; }
+  .r-tag-paid { background: var(--accent-soft); color: var(--accent-deep); }
+
+  /* Numbered question list */
+  .q-list { list-style: none; padding: 0; counter-reset: q; }
+  .q-list li {
+    counter-increment: q;
+    padding: 10px 0 10px 36px;
+    border-bottom: 1px dashed var(--line-soft);
+    position: relative;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .q-list li::before {
+    content: counter(q, decimal-leading-zero);
+    position: absolute; left: 0; top: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .q-list li:last-child { border-bottom: none; }
+
+  /* Footer */
+  .closer {
+    margin-top: 60px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    color: var(--ink-faded);
+    font-style: italic;
+  }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 32px 16px 60px; }
+    .hero h1 { font-size: 38px; }
+    .phase-head h2 { font-size: 28px; }
+    .tab { padding: 10px 12px; font-size: 12px; }
+    .sched-row { grid-template-columns: 50px 1fr 1.3fr; }
+    .topic-inner { padding-left: 24px; }
+    .vid-list li { flex-wrap: wrap; }
+    .res-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="paper-grain"></div>
+<div class="wrap">
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header class="hero">
+  <div class="hero-stamp">v4 · CampusX Edition</div>
+  <h1>The GenAI<br>Roadmap, <em>simplified</em>.</h1>
+  <p class="subhead">Eighteen weeks from working SDE to GenAI SDE2/MTS. Free-first, paced for one full-time job, mapped video-by-video to CampusX's free playlists.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="label">Target</span>
+      <span class="val">SDE2 / MTS · GenAI</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Cadence</span>
+      <span class="val">~7 hrs / week</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Output</span>
+      <span class="val">1 showcase repo + 4 stories</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Course cost</span>
+      <span class="val">₹0 minimum</span>
+    </div>
+  </div>
+</header>
+
+
+
+<!-- PROGRESS -->
+<div class="progress-strip">
+  <span class="label">Overall</span>
+  <div class="progress-bar-outer"><div class="progress-bar-inner" id="globalFill"></div></div>
+  <span class="progress-num" id="globalCount">0 / 0</span>
+  <button class="reset-link" onclick="resetProgress()">Reset</button>
+</div>
+
+<!-- TABS -->
+<nav class="tabs">
+  <button class="tab active" onclick="switchPhase(0)"><span class="tab-num">01</span>Foundations</button>
+  <button class="tab" onclick="switchPhase(1)"><span class="tab-num">02</span>RAG + FT</button>
+  <button class="tab" onclick="switchPhase(2)"><span class="tab-num">03</span>Agents</button>
+  <button class="tab" onclick="switchPhase(3)"><span class="tab-num">04</span>Production</button>
+  <button class="tab" onclick="switchPhase(4)"><span class="tab-num">05</span>Interview</button>
+  <button class="tab" onclick="switchPhase(5)"><span class="tab-num">06</span>Schedule</button>
+  <button class="tab" onclick="switchPhase(6)"><span class="tab-num">07</span>Resources</button>
+</nav>
+
+<!-- ═══════════ PHASE 1: FOUNDATIONS ═══════════ -->
+<section class="phase active" id="phase-0">
+  <div class="phase-head">
+    <div class="phase-eyebrow">Phase One · Weeks 1–3</div>
+    <h2>LLM <em>Foundations</em><br>+ Python quickstart</h2>
+    <p class="lede">Turn ERG production intuition into interview-ready language, and build enough Python fluency to ship FastAPI services confidently. Your JS + C++ background is a feature, not a bug — production GenAI code looks more like typed backend services than data-science notebooks.</p>
+    <div class="phase-stats">
+      <div class="stat"><span class="stat-label">Duration</span><span class="stat-val">3 weeks</span></div>
+      <div class="stat"><span class="stat-label">Effort</span><span class="stat-val">7 hrs/wk</span></div>
+      <div class="stat"><span class="stat-label">Output</span><span class="stat-val">Warmup scripts</span></div>
+    </div>
+    <div class="phase-progress">
+      <span class="label">Phase progress</span>
+      <div class="bar"><div class="fill phase-fill"></div></div>
+      <span class="num phase-num">0 / 0</span>
+    </div>
+  </div>
+
+  <div class="showcase-note">
+    <span class="icon">📌</span>
+    <span class="text"><strong>Showcase status:</strong> Not started. <strong>W1:</strong> tiny FastAPI + OpenAI endpoint to internalize the stack. <strong>W2-3:</strong> streaming chatbot + JSON extractor (throwaway warmups). Pick your real showcase corpus by end of Week 3.</span>
+  </div>
+
+  <!-- Topic: Python Quickstart -->
+  <div class="topic" data-id="python-quickstart">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'python-quickstart')"></span>
+      <span class="topic-emoji">🐍</span>
+      <span class="topic-title">Python ramp-up — from JS + C++</span>
+      <span class="pill pill-quick">6–8 hrs</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="edge"><strong>Good news:</strong> JS + C++ is genuinely strong preparation. You already know async/await, closures, type systems, references, event loops. Python's <code>async</code>/<code>await</code> works almost identically to JS. List comprehensions = <code>.map()</code>/<code>.filter()</code>. Pydantic = TypeScript-style runtime types. C++ rigor makes your Python look more like senior FAANG code than "data science Jupyter Python." You're 3-4 hours behind a Python native at Week 1; by Week 6 the gap is gone.</div>
+
+      <div class="sec">
+        <div class="sec-label">📋 The plan — 7 hours, mostly Indian creators</div>
+        <ul>
+          <li><strong>Strategy:</strong> skip JS-equivalent concepts (variables, loops, functions, OOP) and jump to specific timestamps for what differs. CodeWithHarry's full Python course is 11 hours — you'll watch ~60 min total by skipping with timestamps.</li>
+          <li>All videos verified accessible. Watch at 1.5x to halve the time further.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-label">⚡ Block 0 — Install &amp; tooling (30 min)</div>
+        <ul>
+          <li><strong>Install Python 3.12+ via uv:</strong> one command, skips pip/venv/conda mess</li>
+          <li><strong>Mac/Linux:</strong> <code>curl -LsSf https://astral.sh/uv/install.sh | sh</code></li>
+          <li><strong>Windows:</strong> <code>powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</code></li>
+          <li><strong>Then:</strong> <code>uv python install 3.12</code> · <code>uv init my-project</code> · <code>uv add fastapi</code></li>
+        </ul>
+        <div class="time-resource">
+          <span class="time-pill read">READ 10m</span>
+          <a href="https://docs.astral.sh/uv/getting-started/" target="_blank" rel="noopener">uv official Getting Started</a>
+          <span class="note">brief, clean</span>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-label">📘 Block 1 — Python syntax bridge (1.5 hrs)</div>
+        <ul>
+          <li>Skip CWH's intro. Jump to specific chapters for things that differ from JS/C++:</li>
+        </ul>
+        <div class="time-resource">
+          <span class="time-pill">VIDEO 20m</span>
+          <a href="https://www.youtube.com/watch?v=UrsmFxEIp5k&amp;t=4555s" target="_blank" rel="noopener">CodeWithHarry — Strings (1:15:55)</a>
+          <span class="note">f-strings = JS template literals</span>
+        </div>
+        <div class="time-resource">
+          <span class="time-pill">VIDEO 25m</span>
+          <a href="https://www.youtube.com/watch?v=UrsmFxEIp5k&amp;t=6653s" target="_blank" rel="noopener">CodeWithHarry — Lists &amp; Tuples (1:50:53)</a>
+          <span class="note">slicing, tuples = immutable lists</span>
+        </div>
+        <div class="time-resource">
+          <span class="time-pill">VIDEO 25m</span>
+          <a href="https://www.youtube.com/watch?v=UrsmFxEIp5k&amp;t=8756s" target="_blank" rel="noopener">CodeWithHarry — Dictionary &amp; Sets (2:25:56)</a>
+          <span class="note">dicts = JS objects, but better</span>
+        </div>
+        <div class="time-resource">
+          <span class="time-pill">VIDEO 30m</span>
+          <a href="https://www.youtube.com/watch?v=UrsmFxEIp5k&amp;t=29738s" target="_blank" rel="noopener">CodeWithHarry — Advanced Python 1 (8:15:38)</a>
+          <span class="note">list/dict comprehensions, *args, **kwargs, lambdas, decorators</span>
+        </div>
+        <div class="time-resource">
+          <span class="time-pill read">READ 30m</span>
+          <a href="https://www.freecodecamp.org/news/learn-python-for-javascript-developers-handbook/" target="_blank" rel="noopener">FreeCodeCamp — Python for JS Developers</a>
+          <span class="note">if you prefer reading: concept-by-concept JS↔Python mapping</span>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-label">🔀 Block 2 — Async Python (1 hr)</div>
+        <ul>
+          <li>JS async/await with different keywords. <strong>The one gotcha:</strong> forgetting <code>await</code> returns a coroutine object, not the value.</li>
+          <li><em>Honest note:</em> Indian creators don't have strong standalone asyncio videos. Real Python's walkthrough is the canonical reference.</li>
+        </ul>
+        <div class="time-resource">
+          <span class="time-pill read">READ 45m</span>
+          <a href="https://realpython.com/async-io-python/" target="_blank" rel="noopener">Real Python — Async IO Walkthrough</a>
+          <span class="note">primary; coroutines, gather, event loop</span>
+        </div>
+        <div class="time-resource">
+          <span class="time-pill alt">READ 15m</span>
+          <a href="https://www.datacamp.com/tutorial/python-async-programming" target="_blank" rel="noopener">DataCamp — Async Programming Guide</a>
+          <span class="note">shorter alt; has clean code examples</span>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-label">🚀 Block 3 — FastAPI (1.5 hrs)</div>
+        <ul>
+          <li>Telusko's 2-hour FastAPI tutorial is the cleanest Indian-creator FastAPI walkthrough. Detailed timestamps below — skip the SQLAlchemy half (you'll use ChromaDB / Pinecone in the roadmap, not SQL).</li>
+        </ul>
+        <div class="time-resource">
+          <span class="time-pill">VIDEO 50m</span>
+          <a href="https://www.youtube.com/watch?v=Lu8lXXlstvM" target="_blank" rel="noopener">Telusko — FastAPI for Beginners</a>
+          <span class="note">primary; watch <strong>00:00–01:04</strong> (Intro through Update/Delete), skip the SQLAlchemy section. ~35 min at 1.5x.</span>
+        </div>
+        <div class="time-resource">
+          <span class="time-pill alt">VIDEO 30m</span>
+          <a href="https://www.youtube.com/watch?v=WU65u9d-97c" target="_blank" rel="noopener">Krish Naik — FastAPI Intro</a>
+          <span class="note">alternative; shorter, good if Telusko feels slow</span>
+        </div>
+        <div class="time-resource">
+          <span class="time-pill read">READ 20m</span>
+          <a href="https://fastapi.tiangolo.com/tutorial/" target="_blank" rel="noopener">FastAPI official tutorial</a>
+          <span class="note">"First Steps" → "Request Body"; the reference you'll return to</span>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-label">📐 Block 4 — Pydantic v2 (45 min)</div>
+        <ul>
+          <li>Telusko's FastAPI tutorial above already covers Pydantic at <strong>00:34:14</strong>. Watch that section if you skipped it.</li>
+        </ul>
+        <div class="time-resource">
+          <span class="time-pill">VIDEO 15m</span>
+          <a href="https://www.youtube.com/watch?v=Lu8lXXlstvM&amp;t=2054s" target="_blank" rel="noopener">Telusko — Pydantic section (34:14)</a>
+          <span class="note">if you skipped it; ~10 min at 1.5x</span>
+        </div>
+        <div class="time-resource">
+          <span class="time-pill read">READ 30m</span>
+          <a href="https://docs.pydantic.dev/latest/" target="_blank" rel="noopener">Pydantic v2 — Welcome &amp; Models</a>
+          <span class="note">read intro + "Models" section, that's enough</span>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-label">🛠️ Block 5 — Build the tiny project (1.5 hrs)</div>
+        <ul>
+          <li><strong>Goal:</strong> FastAPI endpoint → takes JSON body → calls OpenAI API → returns response</li>
+          <li><strong>Setup:</strong> <code>uv init</code> → <code>uv add fastapi uvicorn openai pydantic httpx</code></li>
+          <li><strong>Run:</strong> <code>uv run uvicorn main:app --reload</code></li>
+          <li><strong>Test:</strong> open <code>localhost:8000/docs</code> for FastAPI's auto-generated Swagger UI</li>
+          <li>This is the shape of every project for 17 weeks. Build it now, future you thanks past you.</li>
+        </ul>
+      </div>
+
+      <div class="time-total">
+        <strong>Total: ~7 hours core + 1 hour debugging = 8 hours over Week 1</strong>
+        <br>
+        <span style="font-size: 12px;">Distribute as: 1 hr/weekday × 5 days + 3 hours weekend</span>
+      </div>
+
+      <div class="skip">
+        <strong>Aggressively skip:</strong> NumPy, Pandas, matplotlib, Jupyter workflows. None are required for this roadmap — you're building API services, not Kaggle notebooks. Also skip: metaclasses, descriptors, abstract base classes, "Pythonic" cleverness. Production GenAI code is boring, typed, and explicit — exactly how you already think.
+      </div>
+
+      <div class="supplement" style="border-left-color: var(--accent); margin-top: 14px;">
+        <div class="supplement-label" style="color: var(--accent);">Don't waste time on</div>
+        <ul>
+          <li><strong>Watching CodeWithHarry's full 11-hour course</strong> — only jump to the chapters timestamped above</li>
+          <li><strong>Telusko's SQLAlchemy section</strong> (01:04 onwards) — you'll use ChromaDB / Pinecone, not SQL</li>
+          <li><strong>OOP refresher in Python</strong> — your C++ background covers this; pick it up by exposure</li>
+          <li><strong>Virtual environments / pip / venv tutorials</strong> — use uv, skip the historical pain</li>
+          <li><strong>Pandas / NumPy / Matplotlib intros</strong> — not in this roadmap's critical path</li>
+          <li><strong>Type hints deep-dive</strong> — Pydantic teaches you what you need; skip Generic / TypeVar / Protocol</li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Tokenization & Embeddings -->
+  <div class="topic" data-id="tokenization-embeddings">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'tokenization-embeddings')"></span>
+      <span class="topic-emoji">🔤</span>
+      <span class="topic-title">Tokenization &amp; embeddings</span>
+      <span class="pill pill-deepen">Deepen</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Concepts</div>
+        <ul>
+          <li>BPE, SentencePiece, tiktoken — text → tokens; why count ≠ words</li>
+          <li>Tokenization impacts cost, latency, prompt design</li>
+          <li>Embeddings: contextual vs static, dimensionality, cosine similarity</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Hands-on</div>
+        <ul>
+          <li>Use tiktoken to count tokens for ERG prompts — formalize what you found in production</li>
+          <li>Compare OpenAI, HuggingFace, Ollama embeddings → cosine similarity table</li>
+        </ul>
+      </div>
+      <div class="edge"><strong>Your edge:</strong> You traced 5116→6512 token inflation on PRB1968014. Frame as "I quantified prompt bloat impact in production." Interview gold.</div>
+
+      <div class="videos">
+        <div class="videos-head">
+          <span class="pl-name">100 Days of Deep Learning</span>
+          <span class="pl-source">CampusX</span>
+          <span class="pl-free">Free</span>
+        </div>
+        <ul class="vid-list">
+          <li><span class="vid-num">D71</span><a class="vid-link" href="https://www.youtube.com/watch?v=BjRVS2wTtcA" target="_blank" rel="noopener">Introduction to Transformers — Part 1</a></li>
+          <li><span class="vid-num">tk</span><a class="vid-link" href="https://www.youtube.com/watch?v=zza-0hUsipw" target="_blank" rel="noopener">What is Tokenization &amp; Its Implementation in Python</a></li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Transformer Architecture -->
+  <div class="topic" data-id="transformer-architecture">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'transformer-architecture')"></span>
+      <span class="topic-emoji">⚡</span>
+      <span class="topic-title">Transformer architecture &amp; attention</span>
+      <span class="pill pill-critical">Critical</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Master enough to teach in 2 minutes</div>
+        <ul>
+          <li>Self-attention: Q/K/V matrices, "every token attends to every other"</li>
+          <li>Multi-head attention — why parallel heads, what they specialize in</li>
+          <li>Positional encoding (sinusoidal, RoPE basics), context window limits</li>
+          <li>Encoder-only (BERT) vs decoder-only (GPT) vs encoder-decoder (T5)</li>
+          <li>Pre-training → SFT → RLHF/DPO pipeline (concept-level)</li>
+        </ul>
+      </div>
+      <div class="skip"><strong>Don't:</strong> build a transformer from scratch. Aim to <em>explain</em>, not <em>implement</em>. Watch CampusX videos below + Jay Alammar's blog. Done.</div>
+
+      <div class="videos">
+        <div class="videos-head">
+          <span class="pl-name">100 Days of Deep Learning · Transformer arc</span>
+          <span class="pl-source">CampusX</span>
+          <span class="pl-free">Free</span>
+        </div>
+        <ul class="vid-list">
+          <li><span class="vid-num">D71</span><a class="vid-link" href="https://www.youtube.com/watch?v=BjRVS2wTtcA" target="_blank" rel="noopener">Introduction to Transformers — Part 1</a></li>
+          <li><span class="vid-num">att</span><a class="vid-link" href="https://www.youtube.com/watch?v=KMHkbXzHn7s" target="_blank" rel="noopener">How Attention Mechanism Works in Transformers</a></li>
+          <li><span class="vid-num">crs</span><a class="vid-link" href="https://www.youtube.com/watch?v=smOnJtCevoU" target="_blank" rel="noopener">Cross Attention in Transformers</a></li>
+          <li><span class="vid-num">dec</span><a class="vid-link" href="https://www.youtube.com/watch?v=DI2_hrAulYo" target="_blank" rel="noopener">Transformer Decoder Architecture</a></li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">Optional — for visual reinforcement</div>
+        <ul>
+          <li><a href="https://www.youtube.com/watch?v=eMlx5fFNoYc" target="_blank" rel="noopener">3Blue1Brown — Attention in Transformers</a> (best visual explanation)</li>
+          <li><a href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">Jay Alammar — The Illustrated Transformer</a> (reread morning of interview)</li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Sampling Parameters -->
+  <div class="topic" data-id="sampling-parameters">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'sampling-parameters')"></span>
+      <span class="topic-emoji">🎛️</span>
+      <span class="topic-title">Sampling &amp; decoding parameters</span>
+      <span class="pill pill-critical">Critical</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Concepts</div>
+        <ul>
+          <li><strong>Temperature</strong> — scales logits before softmax; 0 = greedy, high = creative</li>
+          <li><strong>Top-k</strong> — keeps only k highest-probability tokens</li>
+          <li><strong>Top-p (nucleus)</strong> — dynamic cutoff via cumulative probability</li>
+          <li>Frequency / presence / repetition penalties</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Hands-on</div>
+        <ul>
+          <li>Run Ollama locally with Llama 3 / Mistral — vary parameters, log outputs</li>
+          <li>Build a streaming response demo (throwaway)</li>
+        </ul>
+      </div>
+      <div class="edge"><strong>Your edge:</strong> ERG uses these parameters in Scripts - Background. Change them, document output quality changes. Production-grounded interview answer.</div>
+
+      <div class="videos">
+        <div class="videos-head">
+          <span class="pl-name">Generative AI using LangChain</span>
+          <span class="pl-source">CampusX · V3</span>
+          <span class="pl-free">Free</span>
+        </div>
+        <ul class="vid-list">
+          <li><span class="vid-num">V3</span><a class="vid-link" href="https://www.youtube.com/watch?v=HdcLE8JuMrA" target="_blank" rel="noopener">LangChain Models — In-depth Tutorial (covers model params)</a></li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — best concept references</div>
+        <ul>
+          <li><a href="https://cohere.com/blog/llm-parameters-best-outputs-language-ai" target="_blank" rel="noopener">Cohere — LLM Parameters Demystified</a> (15-min read)</li>
+          <li><a href="https://ollama.com/" target="_blank" rel="noopener">Ollama</a> — install locally, vary params hands-on</li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Prompt Engineering -->
+  <div class="topic" data-id="prompt-engineering">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'prompt-engineering')"></span>
+      <span class="topic-emoji">✍️</span>
+      <span class="topic-title">Prompt engineering foundations</span>
+      <span class="pill pill-deepen">Deepen</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Master</div>
+        <ul>
+          <li>System vs user prompts — role separation, instruction hierarchy</li>
+          <li>Zero-shot → few-shot → chain-of-thought</li>
+          <li>Function calling / tool calling — the bridge to agents</li>
+          <li>Structured output — JSON mode, Pydantic output parsers</li>
+          <li>Why prompts fail: ambiguity, conflicts, token overflow, lost-in-the-middle</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Hands-on (warmups, throwaway)</div>
+        <ul>
+          <li>Streaming chatbot with system prompt</li>
+          <li>Few-shot classifier routing emails by intent</li>
+          <li>Structured JSON extractor from unstructured text</li>
+        </ul>
+      </div>
+      <div class="edge"><strong>Your edge:</strong> Document a before/after prompt optimization from your ERG token-bloat fix — token counts on each. Use as a prompt engineering case study.</div>
+
+      <div class="videos">
+        <div class="videos-head">
+          <span class="pl-name">Generative AI using LangChain</span>
+          <span class="pl-source">CampusX</span>
+          <span class="pl-free">Free</span>
+        </div>
+        <ul class="vid-list">
+          <li><span class="vid-num">V4</span><a class="vid-link" href="https://www.youtube.com/watch?v=3TGqlQxpuU0" target="_blank" rel="noopener">Prompts in LangChain</a></li>
+          <li><span class="vid-num">V5</span><a class="vid-link" href="https://www.youtube.com/watch?v=y5EmRr1O1h4" target="_blank" rel="noopener">Structured Output in LangChain</a></li>
+          <li><span class="vid-num">V6</span><a class="vid-link" href="https://www.youtube.com/watch?v=Op6PbJZ5b2Q" target="_blank" rel="noopener">Output Parsers in LangChain</a></li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — for depth</div>
+        <ul>
+          <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener">Anthropic Prompt Engineering Guide</a> (best reference)</li>
+          <li><a href="https://cookbook.openai.com/articles/techniques_to_improve_reliability" target="_blank" rel="noopener">OpenAI Cookbook — Techniques to improve reliability</a></li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══════════ PHASE 2: RAG + FINE-TUNING ═══════════ -->
+<section class="phase" id="phase-1">
+  <div class="phase-head">
+    <div class="phase-eyebrow">Phase Two · Weeks 4–8</div>
+    <h2>RAG <em>end-to-end</em><br>+ one LoRA</h2>
+    <p class="lede">From "I know ERG uses RAG" to "I can design, build, debug, and evaluate any RAG system." The most-asked topic in GenAI interviews.</p>
+    <div class="phase-stats">
+      <div class="stat"><span class="stat-label">Duration</span><span class="stat-val">5 weeks</span></div>
+      <div class="stat"><span class="stat-label">Effort</span><span class="stat-val">7 hrs/wk</span></div>
+      <div class="stat"><span class="stat-label">Output</span><span class="stat-val">Showcase v1 → v2</span></div>
+    </div>
+    <div class="phase-progress">
+      <span class="label">Phase progress</span>
+      <div class="bar"><div class="fill phase-fill"></div></div>
+      <span class="num phase-num">0 / 0</span>
+    </div>
+  </div>
+
+  <div class="showcase-note">
+    <span class="icon">🛠️</span>
+    <span class="text"><strong>Showcase milestones:</strong> Pick your corpus in Week 4 (ServiceNow docs / Scribbl3D catalog / domain you care about). <strong>v1 (W4-5):</strong> Basic RAG with FastAPI. <strong>v2 (W6-7):</strong> Hybrid retrieval + reranker + RAGAS eval. <strong>W8:</strong> LoRA notebook in same repo.</span>
+  </div>
+
+  <!-- Topic: Document Loading & Chunking -->
+  <div class="topic" data-id="doc-loading-chunking">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'doc-loading-chunking')"></span>
+      <span class="topic-emoji">📦</span>
+      <span class="topic-title">Document loading &amp; chunking</span>
+      <span class="pill pill-build">Build</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Master</div>
+        <ul>
+          <li>Loaders: PDF, JSON, Web (BeautifulSoup) — pick what your corpus needs</li>
+          <li>RecursiveCharacterTextSplitter (most common), token-based, semantic splitting</li>
+          <li>Chunk size vs overlap tradeoffs — affects retrieval quality</li>
+          <li>Different chunking for code vs prose vs tables (common interview question)</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Showcase v0 starts here</div>
+        <ul>
+          <li>Pick corpus, FastAPI scaffold, ingest + chunk pipeline</li>
+          <li>This is your foundation for 10+ weeks — pick a corpus you actually care about</li>
+        </ul>
+      </div>
+
+      <div class="videos">
+        <div class="videos-head">
+          <span class="pl-name">Generative AI using LangChain</span>
+          <span class="pl-source">CampusX</span>
+          <span class="pl-free">Free</span>
+        </div>
+        <ul class="vid-list">
+          <li><span class="vid-num">V1</span><a class="vid-link" href="https://www.youtube.com/watch?v=nlz9j-r0U9U" target="_blank" rel="noopener">Introduction to LangChain</a></li>
+          <li><span class="vid-num">V2</span><a class="vid-link" href="https://www.youtube.com/watch?v=-xSJA8-o6Eg" target="_blank" rel="noopener">LangChain Components</a></li>
+          <li><span class="vid-num">V7</span><a class="vid-link" href="https://www.youtube.com/watch?v=5hjrPILA3-8" target="_blank" rel="noopener">Chains in LangChain</a></li>
+          <li><span class="vid-num">V10</span><a class="vid-link" href="https://www.youtube.com/watch?v=bL92ALSZ2Cg" target="_blank" rel="noopener">Document Loaders in LangChain</a></li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — chunking deep-dive</div>
+        <ul>
+          <li><a href="https://www.pinecone.io/learn/chunking-strategies/" target="_blank" rel="noopener">Pinecone — Chunking Strategies for LLM Apps</a></li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Vector DBs & Retrieval -->
+  <div class="topic" data-id="vector-dbs-retrieval">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'vector-dbs-retrieval')"></span>
+      <span class="topic-emoji">🗄️</span>
+      <span class="topic-title">Vector DBs &amp; retrieval strategies</span>
+      <span class="pill pill-critical">Critical</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Concepts</div>
+        <ul>
+          <li>Dense (embeddings) vs sparse (BM25) vs hybrid — when each wins</li>
+          <li>Metadata filtering, top-k, similarity thresholds</li>
+          <li>Reranking with cross-encoders — cheap retrieval + expensive rerank</li>
+          <li>Vector DB landscape: ChromaDB (default for dev), Pinecone (managed), pgvector, Qdrant — pick ONE deeply</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Showcase v1 → v2</div>
+        <ul>
+          <li>Working RAG endpoint → add hybrid (BM25 + dense) → measure precision delta</li>
+          <li>Add cross-encoder reranker → measure precision delta again</li>
+          <li>Document the numbers — interviewers love quantified improvements</li>
+        </ul>
+      </div>
+      <div class="edge"><strong>Your edge:</strong> ERG's KB search uses AIS hybrid semantic+keyword retrieval at 0.7 threshold. You can speak to this exact architecture and explain why hybrid beats pure semantic in production.</div>
+
+      <div class="videos">
+        <div class="videos-head">
+          <span class="pl-name">Generative AI using LangChain</span>
+          <span class="pl-source">CampusX</span>
+          <span class="pl-free">Free</span>
+        </div>
+        <ul class="vid-list">
+          <li><span class="vid-num">V8</span><a class="vid-link" href="https://www.youtube.com/watch?v=47nc0n-e4_w" target="_blank" rel="noopener">LangChain Runnables Part 2</a></li>
+          <li><span class="vid-num">V18</span><a class="vid-link" href="https://www.youtube.com/watch?v=gm_lQG8fYjI" target="_blank" rel="noopener">Building End-to-End AI Agent in LangChain (RAG inside)</a></li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — vector DB depth</div>
+        <ul>
+          <li><a href="https://www.pinecone.io/learn/" target="_blank" rel="noopener">Pinecone Learning Center</a> — ANN, hybrid search, reranking</li>
+          <li><a href="https://docs.trychroma.com/" target="_blank" rel="noopener">ChromaDB docs</a> — your default vector DB</li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Advanced RAG -->
+  <div class="topic" data-id="advanced-rag">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'advanced-rag')"></span>
+      <span class="topic-emoji">🧬</span>
+      <span class="topic-title">Advanced RAG patterns</span>
+      <span class="pill pill-deepen">Deepen</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Know the taxonomy — build only one</div>
+        <ul>
+          <li><strong>Adaptive RAG</strong> — retrieve only when needed</li>
+          <li><strong>Corrective RAG</strong> — grade retrieval, retry on weak results</li>
+          <li><strong>Agentic RAG</strong> — agent picks retriever / source / tool</li>
+          <li><strong>HyDE</strong> — hypothetical document embeddings for vague queries</li>
+          <li><strong>Multi-hop</strong> — chain retrievals for complex questions</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Build ONE</div>
+        <ul>
+          <li>Corrective RAG with retrieval grading + retry loop (saved for showcase v4 in Phase 3)</li>
+        </ul>
+      </div>
+
+      <div class="videos">
+        <div class="videos-head">
+          <span class="pl-name">Agentic AI using LangGraph</span>
+          <span class="pl-source">CampusX</span>
+          <span class="pl-free">Free</span>
+        </div>
+        <ul class="vid-list">
+          <li><span class="vid-num">RAG</span><a class="vid-link" href="https://www.youtube.com/watch?v=E1qP9Xsnmik" target="_blank" rel="noopener">RAG using LangGraph (covers agentic / corrective patterns)</a></li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — canonical references</div>
+        <ul>
+          <li><a href="https://docs.langchain.com/oss/python/langgraph/agentic-rag" target="_blank" rel="noopener">LangChain — Build a custom RAG agent with LangGraph</a></li>
+          <li><a href="https://lilianweng.github.io/posts/2023-06-23-agent/" target="_blank" rel="noopener">Lilian Weng — LLM Powered Autonomous Agents</a></li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: RAG Evaluation -->
+  <div class="topic" data-id="rag-evaluation">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'rag-evaluation')"></span>
+      <span class="topic-emoji">📏</span>
+      <span class="topic-title">RAG evaluation &amp; metrics</span>
+      <span class="pill pill-critical">Critical</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">The gap most candidates have</div>
+        <ul>
+          <li><strong>Retrieval metrics</strong> — precision@k, recall@k, MRR, NDCG</li>
+          <li><strong>Generation metrics</strong> — faithfulness (no hallucination), relevance, completeness</li>
+          <li><strong>LLM-as-judge</strong> — using a stronger model to grade + designing rubrics</li>
+          <li><strong>RAGAS</strong> — context precision, faithfulness, answer relevance</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Showcase v2 (continued)</div>
+        <ul>
+          <li>Add RAGAS auto-eval pipeline to your repo</li>
+          <li>LLM-as-judge scoring with retry-on-low-score</li>
+          <li>Build a test set of 20-30 Q&amp;A pairs from your corpus</li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — CampusX free playlists don't cover this rigorously</div>
+        <ul>
+          <li><a href="https://docs.ragas.io/" target="_blank" rel="noopener">RAGAS docs + tutorial notebooks</a> (primary)</li>
+          <li><a href="https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/" target="_blank" rel="noopener">DeepLearning.AI — Building &amp; Evaluating Advanced RAG</a> (free, ~1.5 hrs)</li>
+          <li><a href="https://hamel.dev/blog/posts/evals/" target="_blank" rel="noopener">Hamel Husain — Your AI product needs evals</a> (industry-standard read)</li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Fine-Tuning -->
+  <div class="topic" data-id="fine-tuning">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'fine-tuning')"></span>
+      <span class="topic-emoji">🔧</span>
+      <span class="topic-title">Fine-tuning + one LoRA experiment</span>
+      <span class="pill pill-critical">Critical</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Master</div>
+        <ul>
+          <li><strong>Decision framework</strong> — Prompt vs RAG vs Fine-tune (the most-asked architectural question)</li>
+          <li><strong>LoRA</strong> — low-rank adaptation; why preferred over full FT</li>
+          <li><strong>QLoRA</strong> — quantized LoRA for memory-constrained training</li>
+          <li><strong>SFT vs DPO vs RLHF</strong> — alignment techniques and tradeoffs</li>
+          <li><strong>Hybrid pattern</strong> — fine-tuned + RAG is often the production answer</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Required: 4-hour LoRA on Colab</div>
+        <ul>
+          <li>Fine-tune Llama 3.1 8B (or smaller) with QLoRA on a small domain dataset</li>
+          <li>Use HuggingFace TRL + bitsandbytes — minimal code, ample tutorials</li>
+          <li>Goal: have ONE fine-tune in your repo + understand the workflow</li>
+        </ul>
+      </div>
+      <div class="edge"><strong>Your edge:</strong> ERG uses RAG, not fine-tuning. Explain WHY: KB content updates frequently → fine-tuned model goes stale → RAG keeps it current. Real production decision you can articulate.</div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — CampusX free playlists don't cover fine-tuning hands-on</div>
+        <ul>
+          <li><a href="https://github.com/unslothai/unsloth" target="_blank" rel="noopener">Unsloth Colab notebook</a> — fastest LoRA on free Colab T4</li>
+          <li><a href="https://huggingface.co/docs/trl/index" target="_blank" rel="noopener">HuggingFace TRL + PEFT docs</a></li>
+          <li><a href="https://huggingface.co/blog/dpo-trl" target="_blank" rel="noopener">HuggingFace blog — DPO explained</a></li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══════════ PHASE 3: AGENTS ═══════════ -->
+<section class="phase" id="phase-2">
+  <div class="phase-head">
+    <div class="phase-eyebrow">Phase Three · Weeks 9–12</div>
+    <h2>Agents, workflows<br>&amp; <em>HITL</em></h2>
+    <p class="lede">The hottest interview topic in 2026. Every target company is shipping agents. LangGraph is your primary tool; MCP is the protocol layer that's now standard across Anthropic, OpenAI, Google, and Microsoft.</p>
+    <div class="phase-stats">
+      <div class="stat"><span class="stat-label">Duration</span><span class="stat-val">4 weeks</span></div>
+      <div class="stat"><span class="stat-label">Effort</span><span class="stat-val">8 hrs/wk</span></div>
+      <div class="stat"><span class="stat-label">Output</span><span class="stat-val">Showcase v3 → v5</span></div>
+    </div>
+    <div class="phase-progress">
+      <span class="label">Phase progress</span>
+      <div class="bar"><div class="fill phase-fill"></div></div>
+      <span class="num phase-num">0 / 0</span>
+    </div>
+  </div>
+
+  <div class="showcase-note">
+    <span class="icon">🤖</span>
+    <span class="text"><strong>Showcase milestones:</strong> <strong>v3 (W9-10):</strong> Add agentic layer — query routing, tool selection, <strong>MCP server</strong> exposing your retrieval as a tool. <strong>v4 (W11):</strong> Corrective RAG with retry-on-low-score. <strong>v5 (W12):</strong> HITL approval node. By end of phase: agentic, self-correcting RAG with MCP integration and human review.</span>
+  </div>
+
+  <!-- Topic: LangGraph Fundamentals -->
+  <div class="topic" data-id="langgraph-fundamentals">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'langgraph-fundamentals')"></span>
+      <span class="topic-emoji">📊</span>
+      <span class="topic-title">LangGraph fundamentals</span>
+      <span class="pill pill-new">New</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Core concepts</div>
+        <ul>
+          <li>Nodes, edges, state schema, conditional edges, graph execution</li>
+          <li>State machine mindset — deterministic flows, not free-form chat</li>
+          <li>Stateful conversations: message history, persistent memory, message trimming</li>
+          <li>Graph visualization — drawing your agent flow is an interview skill</li>
+          <li>LangGraph vs raw LangChain agents — when each approach</li>
+        </ul>
+      </div>
+
+      <div class="videos">
+        <div class="videos-head">
+          <span class="pl-name">Agentic AI using LangGraph</span>
+          <span class="pl-source">CampusX</span>
+          <span class="pl-free">Free</span>
+        </div>
+        <ul class="vid-list">
+          <li><span class="vid-num">V1</span><a class="vid-link" href="https://www.youtube.com/watch?v=xdA0pGDiUPE" target="_blank" rel="noopener">Generative AI vs Agentic AI</a></li>
+          <li><span class="vid-num">V2</span><a class="vid-link" href="https://www.youtube.com/watch?v=GWnSsjT4V68" target="_blank" rel="noopener">What is Agentic AI?</a></li>
+          <li><span class="vid-num">V3</span><a class="vid-link" href="https://www.youtube.com/watch?v=31qyMKNB2RA" target="_blank" rel="noopener">LangChain vs LangGraph</a></li>
+          <li><span class="vid-num">V4</span><a class="vid-link" href="https://www.youtube.com/watch?v=D5KhiCDM9XQ" target="_blank" rel="noopener">LangGraph Core Concepts (nodes, edges, state)</a></li>
+          <li><span class="vid-num">V5</span><a class="vid-link" href="https://www.youtube.com/watch?v=bAWujyAl1Kk" target="_blank" rel="noopener">Sequential Workflows in LangGraph</a></li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Tool Use & ReAct -->
+  <div class="topic" data-id="tool-use-react">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'tool-use-react')"></span>
+      <span class="topic-emoji">🧩</span>
+      <span class="topic-title">Tool use &amp; ReAct agents</span>
+      <span class="pill pill-critical">Critical</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Concepts</div>
+        <ul>
+          <li>Function calling / tool use — how LLMs invoke external tools reliably</li>
+          <li>ReAct pattern: Reason → Act → Observe → Repeat</li>
+          <li>Tool binding, tool execution loop, JSON tool call schema</li>
+          <li>Failure modes: hallucinated tool calls, infinite loops, wrong tool selection</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Build into showcase v3</div>
+        <ul>
+          <li>Multi-tool ReAct agent: web search + RAG retrieval + calculator</li>
+          <li>Agent decides which tool fits each query</li>
+        </ul>
+      </div>
+      <div class="edge"><strong>Your edge:</strong> Quick Win Tasks Skill uses tool binding (Script Include via "Choose existing script"). You debugged a real tool execution constraint — "Write my own script" doesn't execute server-side. Hands-on tool-use debugging in production.</div>
+
+      <div class="videos">
+        <div class="videos-head">
+          <span class="pl-name">Generative AI using LangChain</span>
+          <span class="pl-source">CampusX</span>
+          <span class="pl-free">Free</span>
+        </div>
+        <ul class="vid-list">
+          <li><span class="vid-num">V18</span><a class="vid-link" href="https://www.youtube.com/watch?v=gm_lQG8fYjI" target="_blank" rel="noopener">Building End-to-End AI Agent in LangChain</a></li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — official tool-use specs</div>
+        <ul>
+          <li><a href="https://platform.openai.com/docs/guides/function-calling" target="_blank" rel="noopener">OpenAI function calling docs</a></li>
+          <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/tool-use" target="_blank" rel="noopener">Anthropic tool use docs</a></li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: MCP (Model Context Protocol) -->
+  <div class="topic" data-id="mcp">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'mcp')"></span>
+      <span class="topic-emoji">🔌</span>
+      <span class="topic-title">MCP — Model Context Protocol</span>
+      <span class="pill pill-new">2026 Standard</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Why MCP is suddenly everywhere</div>
+        <ul>
+          <li>Open standard from Anthropic (Nov 2024) — now <strong>natively supported by Claude, ChatGPT, Gemini, Cursor, Windsurf, JetBrains, Vercel AI SDK</strong></li>
+          <li>Donated to <strong>Linux Foundation</strong> in Dec 2025 — vendor-neutral governance</li>
+          <li><strong>78% of enterprise AI teams</strong> report at least one MCP-backed agent in production (Q1 2026 survey)</li>
+          <li>9,400+ public MCP servers; 7.8× year-over-year growth</li>
+          <li>Replaces per-vendor function calling — "USB-C for AI tools"</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Core concepts to master</div>
+        <ul>
+          <li><strong>Architecture:</strong> Hosts (Claude Desktop, Cursor, VS Code) ↔ Clients ↔ Servers</li>
+          <li><strong>JSON-RPC 2.0</strong> as the wire protocol</li>
+          <li><strong>Three primitives:</strong> Tools (actions), Resources (read-only data), Prompts (structured workflows)</li>
+          <li><strong>Two transports:</strong> stdio (local subprocess) vs Streamable HTTP (remote, scaling)</li>
+          <li><strong>OAuth 2.1</strong> for production remote servers (2026 standard)</li>
+          <li><strong>MCP Inspector</strong> (<code>npx @modelcontextprotocol/inspector</code>) for debugging</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Hands-on (Phase 3 add-on, ~6 hrs total)</div>
+        <ul>
+          <li>Install Claude Desktop, connect a public MCP server (e.g. filesystem, GitHub) — see it work end-to-end</li>
+          <li>Build ONE MCP server in Python (FastMCP SDK) exposing 2-3 tools from your showcase corpus</li>
+          <li>Test with MCP Inspector before wiring to a client</li>
+          <li>Add it to your showcase repo — instantly differentiates you from candidates still hand-rolling function calls</li>
+        </ul>
+      </div>
+      <div class="edge"><strong>Your edge:</strong> ERG uses pre-MCP-era custom tool binding via Script Includes. Frame the comparison in interviews: "I worked with traditional function-binding constraints in production; I built an MCP server to understand how the new standard fixes those rough edges." Bridges old enterprise reality and current best practice.</div>
+
+      <div class="videos">
+        <div class="videos-head">
+          <span class="pl-name">MCP Trilogy</span>
+          <span class="pl-source">CampusX · Aug–Sep 2025</span>
+          <span class="pl-free">Free</span>
+        </div>
+        <ul class="vid-list">
+          <li><span class="vid-num">M0</span><a class="vid-link" href="https://www.youtube.com/watch?v=3_TN1i3MTEU" target="_blank" rel="noopener">MCP Trilogy — Mini Playlist Introduction</a></li>
+          <li><span class="vid-num">M1</span><a class="vid-link" href="https://www.youtube.com/watch?v=Zmy439spZB4" target="_blank" rel="noopener">Model Context Protocol — The Why</a></li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — for hands-on building</div>
+        <ul>
+          <li><a href="https://modelcontextprotocol.io/specification/2025-11-25" target="_blank" rel="noopener">Official MCP specification</a> (current spec, Nov 2025)</li>
+          <li><a href="https://anthropic.skilljar.com/introduction-to-model-context-protocol" target="_blank" rel="noopener">Anthropic — Introduction to MCP</a> (free official course, ~2 hrs)</li>
+          <li><a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener">modelcontextprotocol/servers</a> — official server reference implementations</li>
+          <li><a href="https://towardsdatascience.com/model-context-protocol-mcp-tutorial-build-your-first-mcp-server-in-6-steps/" target="_blank" rel="noopener">TDS — Build Your First MCP Server in 6 Steps</a></li>
+          <li><a href="https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/" target="_blank" rel="noopener">2026 MCP Roadmap</a> (read for the production-readiness narrative)</li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Workflow Patterns -->
+  <div class="topic" data-id="workflow-patterns">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'workflow-patterns')"></span>
+      <span class="topic-emoji">🔀</span>
+      <span class="topic-title">Workflow patterns</span>
+      <span class="pill pill-deepen">Deepen</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">From "chatbot" to "system"</div>
+        <ul>
+          <li><strong>Prompt Chaining</strong> — sequential steps, output → input</li>
+          <li><strong>Routers</strong> — classifier routes to different chains based on intent</li>
+          <li><strong>Parallelization</strong> — fan-out / fan-in, run tasks concurrently</li>
+          <li><strong>Iterative loops</strong> — retry until satisfaction criteria met</li>
+        </ul>
+      </div>
+
+      <div class="videos">
+        <div class="videos-head">
+          <span class="pl-name">Agentic AI using LangGraph</span>
+          <span class="pl-source">CampusX</span>
+          <span class="pl-free">Free</span>
+        </div>
+        <ul class="vid-list">
+          <li><span class="vid-num">V6</span><a class="vid-link" href="https://www.youtube.com/watch?v=O6ryuSpqdOw" target="_blank" rel="noopener">Parallel Workflows in LangGraph</a></li>
+          <li><span class="vid-num">V7</span><a class="vid-link" href="https://www.youtube.com/watch?v=I-dvZqTz-Wc" target="_blank" rel="noopener">Conditional Workflows in LangGraph</a></li>
+          <li><span class="vid-num">V8</span><a class="vid-link" href="https://www.youtube.com/watch?v=7CbSqrovcsE" target="_blank" rel="noopener">Iterative Workflows in LangGraph</a></li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — the canonical pattern reference</div>
+        <ul>
+          <li><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Anthropic — Building Effective Agents</a> (30 min, mandatory read)</li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: HITL -->
+  <div class="topic" data-id="hitl">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'hitl')"></span>
+      <span class="topic-emoji">🙋</span>
+      <span class="topic-title">Human-in-the-loop (HITL)</span>
+      <span class="pill pill-new">New</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Why this matters for enterprise interviews</div>
+        <ul>
+          <li>Manual approval nodes — agent pauses before critical actions</li>
+          <li>Interrupt + resume with state checkpointing</li>
+          <li>Editable outputs — human modifies before agent continues</li>
+          <li>Enterprise reality — no one trusts fully autonomous agents in production yet</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Showcase v5</div>
+        <ul>
+          <li>Agent pauses before final response for human review/edit</li>
+          <li>Persist state through interrupt (checkpointer)</li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — primary source</div>
+        <ul>
+          <li><a href="https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/" target="_blank" rel="noopener">LangGraph official docs — Human-in-the-loop guide</a></li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══════════ PHASE 4: PRODUCTION ═══════════ -->
+<section class="phase" id="phase-3">
+  <div class="phase-head">
+    <div class="phase-eyebrow">Phase Four · Weeks 13–14</div>
+    <h2>Production<br><em>engineering</em></h2>
+    <p class="lede">Where 90% of candidates stop. Your strongest differentiator — you already do this daily at ServiceNow.</p>
+    <div class="phase-stats">
+      <div class="stat"><span class="stat-label">Duration</span><span class="stat-val">2 weeks</span></div>
+      <div class="stat"><span class="stat-label">Effort</span><span class="stat-val">8 hrs/wk</span></div>
+      <div class="stat"><span class="stat-label">Output</span><span class="stat-val">Showcase v6 (final)</span></div>
+    </div>
+    <div class="phase-progress">
+      <span class="label">Phase progress</span>
+      <div class="bar"><div class="fill phase-fill"></div></div>
+      <span class="num phase-num">0 / 0</span>
+    </div>
+  </div>
+
+  <div class="showcase-note">
+    <span class="icon">⚙️</span>
+    <span class="text"><strong>Showcase v6 (final):</strong> Add observability layer (LangSmith), input/output guardrails, prompt injection test suite, monitoring. Repo is now production-grade.</span>
+  </div>
+
+  <!-- Topic: Latency, Caching, Cost -->
+  <div class="topic" data-id="latency-cost">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'latency-cost')"></span>
+      <span class="topic-emoji">🚀</span>
+      <span class="topic-title">Latency, caching &amp; cost optimization</span>
+      <span class="pill pill-deepen">Deepen</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Master</div>
+        <ul>
+          <li>Semantic caching — cache similar queries, not just exact matches</li>
+          <li>Embedding caching — avoid recomputing for unchanged docs</li>
+          <li>Streaming — partial results during generation</li>
+          <li>Model routing — cheap model first, escalate to expensive</li>
+          <li>Token budgeting — hard limits, intelligent context truncation</li>
+          <li>Rate limiting, retries, exponential backoff</li>
+        </ul>
+      </div>
+      <div class="edge"><strong>Your edge:</strong> Real production latency debugging via ERG token inflation. Frame as "I led a cost/latency optimization effort that reduced average prompt size by X% with no quality loss."</div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — primary sources (no CampusX coverage)</div>
+        <ul>
+          <li><a href="https://python.langchain.com/docs/integrations/llm_caching/" target="_blank" rel="noopener">LangChain LLM caching docs</a> (semantic cache, Redis, in-memory)</li>
+          <li><a href="https://platform.openai.com/docs/guides/prompt-caching" target="_blank" rel="noopener">OpenAI prompt caching</a></li>
+          <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching" target="_blank" rel="noopener">Anthropic prompt caching</a></li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Observability -->
+  <div class="topic" data-id="observability">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'observability')"></span>
+      <span class="topic-emoji">🔭</span>
+      <span class="topic-title">Observability &amp; debugging</span>
+      <span class="pill pill-new">New</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Master</div>
+        <ul>
+          <li>LLM tracing: log every prompt, completion, token count, latency per call</li>
+          <li>LangSmith — trace agent execution, visualize decision paths</li>
+          <li>State inspection — debug agent state at each graph node</li>
+          <li>Token + cost tracking across the pipeline</li>
+          <li>Why agent debugging is hard: non-deterministic outputs, cascading failures</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Build into showcase v6</div>
+        <ul>
+          <li>Add LangSmith tracing to your full RAG + agent pipeline</li>
+          <li>Simple monitoring dashboard for token spend + latency</li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — LangSmith primary</div>
+        <ul>
+          <li><a href="https://docs.smith.langchain.com/" target="_blank" rel="noopener">LangSmith docs + Quickstart</a> — free tier (~2 hrs)</li>
+          <li><a href="https://langchain-ai.github.io/langgraph/" target="_blank" rel="noopener">LangGraph visualization + debugging guide</a></li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Guardrails & Safety -->
+  <div class="topic" data-id="guardrails">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'guardrails')"></span>
+      <span class="topic-emoji">🛡️</span>
+      <span class="topic-title">Guardrails, safety &amp; responsible AI</span>
+      <span class="pill pill-critical">Critical</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Master</div>
+        <ul>
+          <li>Input validation — PII detection, content filtering, injection defense</li>
+          <li>Output validation — format checks, factuality grading, toxicity screening</li>
+          <li>Prompt injection: direct, indirect, jailbreaks — systematic defenses</li>
+          <li>Microsoft Responsible AI principles (mandatory before MS interview)</li>
+          <li>Hallucination mitigation: grounding, citations, confidence calibration</li>
+        </ul>
+      </div>
+      <div class="sec">
+        <div class="sec-label">Build into showcase v6</div>
+        <ul>
+          <li>Input sanitization layer + output validator on your RAG API</li>
+          <li>Prompt injection test suite — 10-15 attack prompts your agent should refuse</li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — fully external, no course covers this well</div>
+        <ul>
+          <li><a href="https://www.microsoft.com/en-us/ai/responsible-ai" target="_blank" rel="noopener">Microsoft Responsible AI Standard</a> (read before MS interview)</li>
+          <li><a href="https://www.guardrailsai.com/docs" target="_blank" rel="noopener">Guardrails AI framework docs</a></li>
+          <li><a href="https://www.deeplearning.ai/short-courses/red-teaming-llm-applications/" target="_blank" rel="noopener">DeepLearning.AI — Red Teaming LLM Apps</a> (free)</li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══════════ PHASE 5: INTERVIEW ═══════════ -->
+<section class="phase" id="phase-4">
+  <div class="phase-head">
+    <div class="phase-eyebrow">Phase Five · Weeks 15–18</div>
+    <h2>Interview<br><em>ready</em></h2>
+    <p class="lede">Synthesize everything into delivery. System design intensive + case study polish + question drilling + mocks.</p>
+    <div class="phase-stats">
+      <div class="stat"><span class="stat-label">Duration</span><span class="stat-val">4 weeks</span></div>
+      <div class="stat"><span class="stat-label">Effort</span><span class="stat-val">10 hrs/wk</span></div>
+      <div class="stat"><span class="stat-label">Output</span><span class="stat-val">Public repo + 3 mocks</span></div>
+    </div>
+    <div class="phase-progress">
+      <span class="label">Phase progress</span>
+      <div class="bar"><div class="fill phase-fill"></div></div>
+      <span class="num phase-num">0 / 0</span>
+    </div>
+  </div>
+
+  <div class="showcase-note">
+    <span class="icon">🎯</span>
+    <span class="text"><strong>No new code.</strong> Polish: README explaining every architectural decision, architecture diagram, eval results, deployment notes. Make it interview-ready.</span>
+  </div>
+
+  <!-- Topic: 4 Case Studies -->
+  <div class="topic" data-id="case-studies">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'case-studies')"></span>
+      <span class="topic-emoji">🗂️</span>
+      <span class="topic-title">Your 4 case studies (STAR format)</span>
+      <span class="pill pill-critical">High priority</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">2–3 min each, spoken aloud, anonymized</div>
+        <ul>
+          <li><strong>Story 1 — Performance debugging (work):</strong> "I debugged a GenAI pipeline performance regression in production. Traced it to prompt token bloat and low-quality RAG retrieval, quantified the impact on latency and cost, proposed systematic fixes." (Don't say PRB1968014.)</li>
+          <li><strong>Story 2 — System reliability (work):</strong> "I identified a systemic config issue causing pipeline crashes, shipped a short-term null-guard, and proposed long-term schema-level prevention."</li>
+          <li><strong>Story 3 — Showcase RAG project:</strong> "I built an end-to-end RAG system with hybrid retrieval, RAGAS evaluation, LangSmith observability, and prompt injection guardrails."</li>
+          <li><strong>Story 4 — Agent layer:</strong> "I designed an agentic RAG workflow with corrective retry, tool routing, and human-in-the-loop approval."</li>
+        </ul>
+      </div>
+      <div class="edge"><strong>Format each as:</strong> Situation → Problem → Investigation → Root Cause → Fix → Impact → What I Learned. Anonymize: no PRB/STRY numbers, no scope names. Frame at architecture level.</div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Drill Questions -->
+  <div class="topic" data-id="drill-questions">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'drill-questions')"></span>
+      <span class="topic-emoji">❓</span>
+      <span class="topic-title">25 drill questions — answer each cold in ~2 min</span>
+      <span class="pill pill-critical">Drill</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <ol class="q-list">
+        <li>Walk me through a transformer forward pass. What is self-attention computing?</li>
+        <li>Top-k vs top-p sampling — which produces more diverse output and why?</li>
+        <li>How does temperature interact with top-p? When do you set temperature to 0?</li>
+        <li>RAG vs fine-tuning vs prompt engineering — give me a concrete decision tree.</li>
+        <li>Walk through how you would evaluate a RAG system end-to-end.</li>
+        <li>Define hallucination. Give 3 mitigation strategies and their tradeoffs.</li>
+        <li>What is RLHF doing mathematically? How does DPO simplify it?</li>
+        <li>Why do we need a vector DB? What does ANN search trade off vs exact search?</li>
+        <li>You have a prompt injection attempt — walk through your defense layers.</li>
+        <li>Design a customer support chatbot with RAG. Cover ingestion, retrieval, eval, HITL.</li>
+        <li>Your RAG returns irrelevant docs for some queries. Debug systematically.</li>
+        <li>Explain LoRA. Why preferred over full fine-tuning? What's the rank parameter doing?</li>
+        <li>Document is 200 pages. Question needs info from page 5 and 180. Architect this.</li>
+        <li>Hybrid search — what does BM25 catch that dense retrieval misses?</li>
+        <li>Your GenAI pipeline p95 latency is 8s. Optimization options ranked by ROI.</li>
+        <li>What is an AI agent? What makes it different from a chatbot with tools?</li>
+        <li>Explain ReAct. What goes wrong if the Reasoning trace is removed?</li>
+        <li>How do you monitor a GenAI system in production? What metrics, where?</li>
+        <li>Why does chain-of-thought work? When does it hurt?</li>
+        <li>Design an email response generation system (your ERG). Walk through tradeoffs.</li>
+        <li>How does function calling work under the hood? How does the LLM "decide"?</li>
+        <li>Your agent is stuck in a loop. What 3 things do you check first?</li>
+        <li>What is MCP and what problem does it solve over per-vendor function calling?</li>
+        <li>Walk through MCP architecture: host, client, server. What is each responsible for?</li>
+        <li>When would you build an MCP server vs use direct function calling? Tradeoffs?</li>
+      </ol>
+    </div></div>
+  </div>
+
+  <!-- Topic: System Design -->
+  <div class="topic" data-id="system-design">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'system-design')"></span>
+      <span class="topic-emoji">🏗️</span>
+      <span class="topic-title">System design practice (intensive)</span>
+      <span class="pill pill-build">Build</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">3-4 problems per week on Excalidraw</div>
+        <ul>
+          <li>Design a RAG-based document QA for a 10M document corpus</li>
+          <li>Design content moderation pipeline using LLMs</li>
+          <li>Design email reply suggestion feature (your ERG — practice extensively)</li>
+          <li>Design multi-agent customer onboarding system</li>
+          <li>Design enterprise knowledge base with HITL review</li>
+          <li>Design a code review assistant for a 500-engineer org</li>
+          <li>Design a real-time meeting summarizer</li>
+        </ul>
+      </div>
+      <div class="edge"><strong>For each:</strong> draw architecture → name components → discuss tradeoffs → address failure modes → explain evaluation → talk scaling. Time yourself at 45 min.</div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — the system design bible for GenAI</div>
+        <ul>
+          <li><a href="https://www.oreilly.com/library/view/ai-engineering/9781098166298/" target="_blank" rel="noopener">Chip Huyen — AI Engineering</a> (reference, not cover-to-cover)</li>
+          <li><a href="https://github.com/chiphuyen/ml-interviews-book" target="_blank" rel="noopener">chiphuyen/ml-interviews-book</a> (free)</li>
+          <li><a href="https://excalidraw.com/" target="_blank" rel="noopener">Excalidraw</a> — weekly sketches from Week 5, intensive batch in W15-16</li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Topic: Mocks -->
+  <div class="topic" data-id="mocks">
+    <div class="topic-bar" onclick="toggleTopic(this)">
+      <span class="check" onclick="event.stopPropagation(); toggleCheck(this, 'mocks')"></span>
+      <span class="topic-emoji">💼</span>
+      <span class="topic-title">Showcase polish + mock interviews</span>
+      <span class="pill pill-build">Build</span>
+      <span class="caret">▾</span>
+    </div>
+    <div class="topic-body"><div class="topic-inner">
+      <div class="sec">
+        <div class="sec-label">Final-week deliverables</div>
+        <ul>
+          <li>README explaining every architectural decision and tradeoff</li>
+          <li>Architecture diagram (Excalidraw, embedded in README)</li>
+          <li>Eval results table (RAGAS scores, retrieval precision, latency p50/p95)</li>
+          <li>Deployment notes (Dockerfile, env vars, how to run)</li>
+          <li>3+ mock interviews (Pramp, Interviewing.io, or peer)</li>
+          <li>Record yourself answering 5 questions from drill list — listen back, fix filler words</li>
+        </ul>
+      </div>
+
+      <div class="supplement">
+        <div class="supplement-label">External — where to find mocks</div>
+        <ul>
+          <li><a href="https://topmate.io/" target="_blank" rel="noopener">Topmate</a> — ex-Google / Microsoft Indian engineers (₹500-2000/session)</li>
+          <li><a href="https://www.pramp.com/" target="_blank" rel="noopener">Pramp</a> — free peer mocks</li>
+          <li><a href="https://interviewing.io/" target="_blank" rel="noopener">Interviewing.io</a> — paid, anonymous mocks with FAANG engineers</li>
+        </ul>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══════════ PHASE 6: SCHEDULE ═══════════ -->
+<section class="phase" id="phase-5">
+  <div class="phase-head">
+    <div class="phase-eyebrow">Phase Six · Calendar</div>
+    <h2>18-week <em>schedule</em></h2>
+    <p class="lede">~7 hrs/week, escalating to ~10 in the final phase. One showcase repo evolving across all 18 weeks. Weekday ~1 hr theory. Weekend 4-5 hrs building.</p>
+  </div>
+
+  <div class="sched">
+    <div class="sched-row head">
+      <div>Wk</div><div>Focus</div><div>Showcase layer</div>
+    </div>
+
+    <div class="sched-row phase-divider">Phase 1 — Foundations</div>
+    <div class="sched-row"><div class="sched-cell wk">W1</div><div class="sched-cell"><strong>Python ramp-up from JS+C++</strong> (uv, FastAPI, Pydantic, async) + tokenization basics</div><div class="sched-cell">— Python warmup script —</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W2</div><div class="sched-cell">Transformer architecture &amp; attention</div><div class="sched-cell">— warmups only —</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W3</div><div class="sched-cell">Sampling + Ollama + prompt engineering + structured output</div><div class="sched-cell">— <strong>pick corpus this week</strong> —</div></div>
+
+    <div class="sched-row phase-divider">Phase 2 — RAG + Fine-Tuning</div>
+    <div class="sched-row"><div class="sched-cell wk">W4</div><div class="sched-cell">Document loading, chunking, FastAPI scaffold</div><div class="sched-cell"><strong>v0:</strong> scaffold + ingestion</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W5</div><div class="sched-cell">Vector DBs, basic retrieval, generation</div><div class="sched-cell"><strong>v1:</strong> basic RAG</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W6</div><div class="sched-cell">Hybrid search (BM25 + dense) + reranker</div><div class="sched-cell"><strong>v2a:</strong> hybrid + rerank</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W7</div><div class="sched-cell">RAG evaluation (RAGAS, LLM-as-judge) + advanced patterns</div><div class="sched-cell"><strong>v2b:</strong> full eval suite</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W8</div><div class="sched-cell">Fine-tuning + LoRA + decision framework</div><div class="sched-cell">+ fine-tune notebook in repo</div></div>
+
+    <div class="sched-row phase-divider">Phase 3 — Agents</div>
+    <div class="sched-row"><div class="sched-cell wk">W9</div><div class="sched-cell">LangGraph fundamentals + state machines</div><div class="sched-cell"><strong>v3a:</strong> LangGraph rewrite</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W10</div><div class="sched-cell">Tool use, ReAct agents, <strong>MCP server build</strong></div><div class="sched-cell"><strong>v3b:</strong> agentic routing + MCP server</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W11</div><div class="sched-cell">Workflow patterns + Corrective RAG</div><div class="sched-cell"><strong>v4:</strong> corrective retry</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W12</div><div class="sched-cell">Multi-agent (small) + HITL</div><div class="sched-cell"><strong>v5:</strong> HITL approval</div></div>
+
+    <div class="sched-row phase-divider">Phase 4 — Production</div>
+    <div class="sched-row"><div class="sched-cell wk">W13</div><div class="sched-cell">Caching, latency optimization, observability</div><div class="sched-cell"><strong>v6a:</strong> observability</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W14</div><div class="sched-cell">Guardrails, safety, prompt injection, responsible AI</div><div class="sched-cell"><strong>v6b:</strong> guardrails — DONE</div></div>
+
+    <div class="sched-row phase-divider">Phase 5 — Interview Prep</div>
+    <div class="sched-row"><div class="sched-cell wk">W15</div><div class="sched-cell">System design intensive (3-4 problems)</div><div class="sched-cell">README + architecture diagram</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W16</div><div class="sched-cell">More system design + 22 questions drilling</div><div class="sched-cell">Eval results table in README</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W17</div><div class="sched-cell">Case studies polish + mock interviews start</div><div class="sched-cell">Deployment notes</div></div>
+    <div class="sched-row"><div class="sched-cell wk">W18</div><div class="sched-cell">More mocks + final polish</div><div class="sched-cell">Repo public + applications submitted</div></div>
+  </div>
+</section>
+
+<!-- ═══════════ PHASE 7: RESOURCES ═══════════ -->
+<section class="phase" id="phase-6">
+  <div class="phase-head">
+    <div class="phase-eyebrow">Phase Seven · Library</div>
+    <h2>Resources, <em>ranked</em></h2>
+    <p class="lede">Primary anchor is free. Paid courses are optional backup, not the centerpiece. The principle: clear explanations you actually finish beat expensive courses you abandon.</p>
+  </div>
+
+  <div class="cost-banner">
+    <span class="icon">💰</span>
+    <div>
+      <h4>This roadmap costs ₹0 minimum</h4>
+      <p>CampusX playlists (₹0) + DeepLearning.AI short courses (₹0) + official framework docs (₹0) + Anthropic / OpenAI guides (₹0) = complete coverage. Only optional spend: one Udemy course on sale (~₹500) if you hit a topic where CampusX is unclear, and Topmate mocks (~₹500-2000/session) in final 2 weeks.</p>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <h3>Primary anchor — <em>CampusX (free)</em></h3>
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="r-name"><a href="https://www.youtube.com/playlist?list=PLKnIA16_RmvYuZauWaPlRTC54KxSNLtNn" target="_blank" rel="noopener">100 Days of Deep Learning</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Foundational neural networks + transformer architecture (Days 71+). Use Days 71-80 for Phase 1 transformer videos. Skip the early classical DL days.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://www.youtube.com/playlist?list=PLKnIA16_RmvaTbihpo4MtzVm4XOQa0ER0" target="_blank" rel="noopener">Generative AI using LangChain</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">21 videos. Full Phase 2 anchor: models, prompts, structured output, chains, runnables, document loaders, vector stores, RAG, tool calling, end-to-end agent. Released 2025.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://www.youtube.com/playlist?list=PLKnIA16_RmvYsvB8qkUQuJmJNuiCUJFPL" target="_blank" rel="noopener">Agentic AI using LangGraph</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Full Phase 3 anchor: LangGraph fundamentals, sequential/parallel/conditional/iterative workflows, RAG with LangGraph, LangSmith observability. Released 2025.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://www.youtube.com/watch?v=3_TN1i3MTEU" target="_blank" rel="noopener">MCP Trilogy</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">CampusX mini-series on Model Context Protocol — the why and how. Watch alongside the LangGraph playlist when building your MCP server.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <h3>Critical free supplements</h3>
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="r-name"><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Anthropic — Building Effective Agents</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Canonical reference for agent patterns. 30-min read. Mandatory before any agents interview.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://docs.ragas.io/" target="_blank" rel="noopener">RAGAS docs</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">RAG evaluation framework. Phase 2 gap — CampusX doesn't cover this rigorously.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://docs.smith.langchain.com/" target="_blank" rel="noopener">LangSmith docs</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Observability platform. Primary Phase 4 tool. Free tier enough for entire roadmap.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://hamel.dev/blog/posts/evals/" target="_blank" rel="noopener">Hamel Husain — Your AI product needs evals</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Industry-standard read on building evals when ground truth doesn't exist. Senior-level thinking.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://lilianweng.github.io/posts/2023-06-23-agent/" target="_blank" rel="noopener">Lilian Weng — LLM Agents</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Research-grade but readable. The gold standard reference on agent architectures.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://www.microsoft.com/en-us/ai/responsible-ai" target="_blank" rel="noopener">Microsoft Responsible AI</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Mandatory read before MS interview. They will ask.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://modelcontextprotocol.io/specification/2025-11-25" target="_blank" rel="noopener">MCP Official Specification</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Current spec (Nov 2025). Architecture, JSON-RPC, transports, primitives. Read before building your MCP server in Week 10.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://anthropic.skilljar.com/introduction-to-model-context-protocol" target="_blank" rel="noopener">Anthropic — Intro to MCP</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Official Anthropic course (~2 hrs). Hands-on Python SDK, decorators, Inspector debugging. Best paired with CampusX's MCP Trilogy.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <h3>Free short courses (1-2 hrs each)</h3>
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="r-name"><a href="https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/" target="_blank" rel="noopener">DLAI — AI Agents in LangGraph</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Phase 3 supplement. Pairs well with CampusX LangGraph playlist.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/" target="_blank" rel="noopener">DLAI — Building &amp; Evaluating Advanced RAG</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Phase 2 eval supplement. Fills the CampusX evaluation gap.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://www.deeplearning.ai/short-courses/red-teaming-llm-applications/" target="_blank" rel="noopener">DLAI — Red Teaming LLM Apps</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Phase 4 guardrails supplement. Prompt injection defense practice.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <h3>Build stack — <em>your daily tools</em></h3>
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="r-name"><a href="https://www.langchain.com/" target="_blank" rel="noopener">LangChain + LangGraph + LangSmith</a> <span class="r-tag r-tag-free">Free tier</span></div>
+        <div class="r-desc">Primary framework. Free tier covers the entire roadmap.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://ollama.com/" target="_blank" rel="noopener">Ollama</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Run Llama 3, Mistral locally. For sampling experiments + understanding tradeoffs.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://docs.trychroma.com/" target="_blank" rel="noopener">ChromaDB</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Local vector DB. Default for showcase. Mention Pinecone/Qdrant as scale options in interviews.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://colab.research.google.com/" target="_blank" rel="noopener">Google Colab</a> <span class="r-tag r-tag-free">Free GPU</span></div>
+        <div class="r-desc">For your one LoRA fine-tune in Week 8. T4 GPU is enough for QLoRA on small models.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://excalidraw.com/" target="_blank" rel="noopener">Excalidraw</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">For architecture diagrams. Use weekly from W5 to build the muscle.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://github.com/unslothai/unsloth" target="_blank" rel="noopener">Unsloth</a> <span class="r-tag r-tag-free">Free</span></div>
+        <div class="r-desc">Fastest LoRA on free Colab T4. Ready-made notebooks.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-section">
+    <h3>Optional paid (only if needed)</h3>
+    <div class="res-grid">
+      <div class="res-card">
+        <div class="r-name"><a href="https://learnwith.campusx.in/courses/LangChain-YouTube-6914618bbb9f4434b9a63317" target="_blank" rel="noopener">CampusX LangChain Notes</a> <span class="r-tag r-tag-paid">₹399</span></div>
+        <div class="r-desc">If you want printable notes alongside the free YouTube playlist. Optional — the videos are enough.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://learnwith.campusx.in/courses/LangGraph-YouTube-69145df5c26d79058b698748" target="_blank" rel="noopener">CampusX LangGraph Notes</a> <span class="r-tag r-tag-paid">₹399</span></div>
+        <div class="r-desc">Same — optional printable notes. Skip unless you take handwritten study notes.</div>
+      </div>
+      <div class="res-card">
+        <div class="r-name"><a href="https://www.oreilly.com/library/view/ai-engineering/9781098166298/" target="_blank" rel="noopener">Chip Huyen — AI Engineering</a> <span class="r-tag r-tag-paid">Book</span></div>
+        <div class="r-desc">The system design bible for GenAI. Reference, not cover-to-cover. Worth buying for Phase 5 system design rounds.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="closer">
+    Free + clear + finished &gt; Paid + dense + abandoned in Week 6.
+  </div>
+</section>
+
+</div>
+
+<script>
+function switchPhase(i) {
+  document.querySelectorAll('.tab').forEach((t, idx) => t.classList.toggle('active', idx === i));
+  document.querySelectorAll('.phase').forEach((p, idx) => p.classList.toggle('active', idx === i));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleTopic(bar) {
+  bar.closest('.topic').classList.toggle('open');
+}
+
+// ===== Progress tracking =====
+const STORAGE_KEY = 'genai_roadmap_v4_progress';
+let progressState = {};
+
+try {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) progressState = JSON.parse(saved);
+} catch (e) {}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progressState)); } catch (e) {}
+}
+
+function toggleCheck(el, id) {
+  const wasChecked = progressState[id] === true;
+  progressState[id] = !wasChecked;
+  el.classList.toggle('checked', !wasChecked);
+  const topic = el.closest('.topic');
+  if (topic) topic.classList.toggle('completed', !wasChecked);
+  saveState();
+  updateProgress();
+}
+
+function applyState() {
+  document.querySelectorAll('.topic[data-id]').forEach(t => {
+    const id = t.getAttribute('data-id');
+    const done = progressState[id] === true;
+    t.classList.toggle('completed', done);
+    const cb = t.querySelector('.check');
+    if (cb) cb.classList.toggle('checked', done);
+  });
+}
+
+function updateProgress() {
+  const all = document.querySelectorAll('.topic[data-id]');
+  let done = 0;
+  all.forEach(t => { if (progressState[t.getAttribute('data-id')]) done++; });
+  const pct = all.length ? (done / all.length) * 100 : 0;
+  document.getElementById('globalFill').style.width = pct + '%';
+  document.getElementById('globalCount').textContent = done + ' / ' + all.length;
+
+  document.querySelectorAll('.phase').forEach(phase => {
+    const topics = phase.querySelectorAll('.topic[data-id]');
+    if (!topics.length) return;
+    let pd = 0;
+    topics.forEach(t => { if (progressState[t.getAttribute('data-id')]) pd++; });
+    const pp = (pd / topics.length) * 100;
+    const fill = phase.querySelector('.phase-fill');
+    const num = phase.querySelector('.phase-num');
+    if (fill) fill.style.width = pp + '%';
+    if (num) num.textContent = pd + ' / ' + topics.length;
+  });
+}
+
+function resetProgress() {
+  if (!confirm('Reset all progress? This cannot be undone.')) return;
+  progressState = {};
+  saveState();
+  applyState();
+  updateProgress();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  applyState();
+  updateProgress();
+});
+if (document.readyState !== 'loading') {
+  applyState();
+  updateProgress();
+}
+</script>
+</body>
+</html>
